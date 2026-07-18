@@ -1,0 +1,102 @@
+# Jira Management Skills — Operational Guide
+
+Shared best practices for all skills in this skillset. Individual SKILL.md
+files reference this document with "see AGENTS.md."
+
+**Maintainer note:** When making changes to this file that affect
+user-facing behavior (new skills, changed defaults, new configuration
+options, or updated best practices), reflect those changes in `README.md`
+at the skillset root so that human readers stay informed.
+
+## Confirmation Before Write
+
+- **Every skill must show the user exactly what will be sent to Jira and
+  receive explicit approval before making any write call.** This applies
+  to `createJiraIssue`, `editJiraIssue`, `transitionJiraIssue`,
+  `addCommentToJiraIssue`, `addWorklogToJiraIssue`, and `createIssueLink`.
+- The confirmation must include all material details: issue key, field
+  values being set or changed, comment text, transition target, link
+  direction — whatever is relevant to the operation.
+- Never assume the user's intent is sufficient approval. Even if the user
+  said "close PROJ-123", confirm the exact transition and target status
+  before executing.
+- For bulk operations, show the full list of affected issues and the
+  action before proceeding.
+- Read-only operations (search, fetch) do not require confirmation.
+
+## Authentication
+
+- The Rovo MCP uses OAuth 2.1 exclusively. Never ask users for API tokens,
+  passwords, or base URLs. If an auth error occurs, instruct the user to
+  complete sign-in in their MCP client.
+- Use the `cloudId` stored in `config.json`. Only the `jira-configure` skill
+  performs initial discovery via `getAccessibleAtlassianResources`.
+
+## Configuration Dependency
+
+- Every skill except `jira-configure` requires `config.json` in the skillset
+  root. If missing, tell the user: "Run /configure-jira-skillset to set up
+  your Jira defaults first." and stop.
+- Read `config.json` relative to the SKILL.md location:
+  `../../config.json` from any `.agents/skills/<name>/SKILL.md`.
+
+## Data Handling
+
+- Do not include personally identifiable information (PII) or sensitive data
+  in issue descriptions, comments, or any content sent to AI-backed tools.
+- Review all AI-generated content before submitting it to Jira.
+- When posting comments via an agent, prepend an "AI-generated" notice to
+  the comment body if the `aiDisclaimer` flag in `config.json` is `true`.
+  Example prefix: `_This comment was generated with AI assistance._\n\n`
+
+## Security Levels
+
+- Always apply the project's configured `securityLevel` from `config.json`
+  when creating or editing issues. Pass it as
+  `additional_fields: { "security": { "name": "<level>" } }`.
+- Always apply the project's configured `commentVisibility` from
+  `config.json` when adding comments or worklogs.
+- If either value is `null`, omit the parameter (no restriction).
+- If the target project is not in `config.json`, warn the user and offer
+  to run `/configure-jira-skillset` for that project before proceeding.
+
+## Auto-Assignment
+
+- When `config.json` has `assignToSelf: true`, skills that create issues
+  should set the assignee to the current user.
+- To get the current user's account ID, call `atlassianUserInfo` and use
+  the returned `account_id` as the `assignee_account_id` parameter on
+  `createJiraIssue`.
+- Cache the account ID within a session — it does not change between calls.
+
+## Rovo MCP Scope
+
+- Rovo searches Jira, Confluence, and JSM based on the authenticated user's
+  permissions. Third-party connectors may not be available at your
+  organization — do not assume access to external data sources.
+- Set `contentFormat` to `"markdown"` on descriptions and comments for
+  readability.
+
+## Tool-Specific Patterns
+
+- **Transition IDs are per-project.** Always call `getTransitionsForJiraIssue`
+  before transitioning — never hardcode transition IDs.
+- **Comments:** Use `addCommentToJiraIssue`, not the `comment` parameter on
+  `transitionJiraIssue` (the latter causes Atlassian Document Format errors).
+- **Pagination:** `searchJiraIssuesUsingJql` paginates via `nextPageToken`,
+  not `startAt`/`limit`. `maxResults` caps at 100 per call.
+- **Custom fields:** Use `additional_fields` on `createJiraIssue` for
+  priority, labels, components, and custom fields — they do not have
+  dedicated top-level parameters.
+- **Issue links:** `createIssueLink` uses directional semantics —
+  `inwardIssue` is the blocker, `outwardIssue` is the blocked issue.
+  Call `getIssueLinkTypes` first to discover available link types.
+
+## Content Format
+
+- Use `contentFormat: "markdown"` for `createJiraIssue`, `editJiraIssue`,
+  and `addCommentToJiraIssue`. This allows natural markdown in descriptions
+  and comments without needing to construct ADF (Atlassian Document Format)
+  JSON.
+- When reading issue content with `getJiraIssue`, use
+  `responseContentFormat: "markdown"` for human-readable output.

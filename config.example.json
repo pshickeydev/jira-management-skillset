@@ -1,0 +1,31 @@
+{
+  "cloudId": "yoursite.atlassian.net",
+  "assignToSelf": true,
+  "aiDisclaimer": true,
+  "configured_at": "",
+
+  "defaults": {
+    "project": "MYPROJ",
+    "issueType": "Task",
+    "priority": "Normal",
+    "labels": [],
+    "components": []
+  },
+
+  "projects": {
+    "MYPROJ": {
+      "issueTypes": ["Bug", "Story", "Task", "Epic", "Sub-task"],
+      "securityLevel": "Internal",
+      "commentVisibility": {
+        "type": "role",
+        "value": "Developers"
+      },
+      "customFields": {
+        "Story Points": "customfield_XXXXX",
+        "Sprint": "customfield_XXXXX"
+      },
+      "defaultLabels": ["team-example"],
+      "defaultComponents": ["backend"]
+    }
+  }
+}
