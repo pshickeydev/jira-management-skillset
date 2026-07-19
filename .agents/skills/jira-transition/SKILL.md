@@ -9,7 +9,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## Prerequisites
@@ -75,6 +75,8 @@ If yes, compose the comment text. Use `addCommentToJiraIssue` as a
 If adding a comment:
 - Apply `commentVisibility` from config
 - Apply AI disclaimer prefix if `config.aiDisclaimer` is true
+- Append the skill attribution line as the last line of the comment:
+  `\n\n_Created with jira-transition v0.1.1_`
 
 ### Step 5 — Confirm before executing
 
@@ -126,3 +128,5 @@ rules. Additional skill-specific notes:
   fields in the `fields` parameter of `transitionJiraIssue`.
 - When closing and commenting in parallel, both calls are independent
   and can fail independently. Report each result separately.
+- Always append the skill attribution line to transition comments.
+  See `../../AGENTS.md` for the attribution format.

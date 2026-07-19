@@ -111,6 +111,28 @@ Dynamic values are discovered at runtime rather than read from
 Static user preferences (security level, priority, labels, assignee)
 are read from config.
 
+### Versioning
+
+Skills use [Semantic Versioning](https://semver.org/)
+(`MAJOR.MINOR.PATCH`). PATCH for non-breaking, non-feature changes
+(bug fixes, wording, attribution). MINOR for new capabilities. MAJOR
+for breaking changes. See `AGENTS.md` for full criteria and scope
+rules.
+
+### Skill attribution
+
+Every skill that creates or modifies Jira content appends a skill
+attribution line to the body of that content (descriptions and
+comments). This is unconditional — it does not depend on the
+`aiDisclaimer` config option. The format is:
+
+```
+_Created with jira-create v0.1.1_
+```
+
+The AI disclaimer (when enabled) is a separate prefix at the top of
+comments. Attribution always goes at the bottom.
+
 ### Data safety
 
 - No PII or sensitive data in prompts or AI-generated content

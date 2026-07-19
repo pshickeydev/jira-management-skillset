@@ -9,7 +9,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## Prerequisites
@@ -94,6 +94,8 @@ Only after the user confirms, call `createIssueLink` with:
 
 If adding a comment on the link:
 - Apply AI disclaimer prefix if `config.aiDisclaimer` is true
+- Append the skill attribution line as the last line of the comment:
+  `\n\n_Created with jira-link v0.1.1_`
 - Note: `createIssueLink`'s `comment` parameter does not support
   `commentVisibility`. If restricted comments are needed, create
   the link without a comment, then use `addCommentToJiraIssue`
@@ -120,3 +122,5 @@ Linked: {KEY-1} {outward description} {KEY-2}
   but has no effect.
 - Both issues must exist. If either `getJiraIssue` call fails, report
   the error and stop.
+- Always append the skill attribution line to link comments.
+  See `../../AGENTS.md` for the attribution format.

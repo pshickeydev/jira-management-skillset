@@ -10,7 +10,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## Prerequisites
@@ -102,20 +102,25 @@ Common field patterns:
 - Assignee: `{ "assignee": { "accountId": "..." } }`
 - Assignee (clear): `{ "assignee": null }`
 - Summary: `{ "summary": "New summary text" }`
-- Description: `{ "description": "New description" }`
+- Description: `{ "description": "New description" }` — when updating
+  descriptions, append the skill attribution line as the last line:
+  `\n\n_Created with jira-update v0.1.1_`
 - Security level: `{ "security": { "name": "..." } }`
 
 **For adding a comment**, call `addCommentToJiraIssue` with:
 - `cloudId`, `issueIdOrKey`
-- `commentBody` with `contentFormat: "markdown"`
+- `commentBody` with `contentFormat: "markdown"` — append the skill
+  attribution line as the last line:
+  `\n\n_Created with jira-update v0.1.1_`
 - `commentVisibility` from `config.projects.{KEY}.commentVisibility`
   (omit if null)
 - If `config.aiDisclaimer` is true, prepend:
   `_This comment was generated with AI assistance._\n\n`
 
 **For updating a comment**, call `addCommentToJiraIssue` with the same
-parameters plus `commentId` set to the existing comment's ID. To find
-comment IDs, fetch the issue with `fields: ["comment"]`.
+parameters (including the skill attribution line) plus `commentId` set
+to the existing comment's ID. To find comment IDs, fetch the issue
+with `fields: ["comment"]`.
 
 ### Step 6 — Report
 
@@ -141,6 +146,8 @@ rules. Additional skill-specific notes:
 - To clear a field, set its value to `null` in the `fields` object.
 - Apply the AI disclaimer prefix only to comments, not to descriptions
   or field edits.
+- Always append the skill attribution line to comments and updated
+  descriptions. See `../../AGENTS.md` for the attribution format.
 - The project key can be extracted from the issue key (everything
   before the hyphen) to look up project-specific config.
 - `editJiraIssue` returns the updated issue. Use

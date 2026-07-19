@@ -92,6 +92,68 @@ at the skillset root so that human readers stay informed.
   `inwardIssue` is the blocker, `outwardIssue` is the blocked issue.
   Call `getIssueLinkTypes` first to discover available link types.
 
+## Versioning
+
+Skills use [Semantic Versioning](https://semver.org/) (`MAJOR.MINOR.PATCH`).
+The version is stored in each skill's YAML frontmatter at
+`metadata.version`.
+
+### When to bump each field
+
+- **PATCH** — Any change that does not add new features or break
+  compatibility. Examples: bug fixes, wording improvements, gotcha
+  additions, adding attribution lines, adjusting defaults, refining
+  instructions.
+- **MINOR** — Adding a new capability or backward-compatible behavior.
+  Examples: supporting a new action (e.g. adding worklog support to
+  `jira-update`), adding a new optional config field, supporting a new
+  issue type pattern.
+- **MAJOR** — Any change that breaks an existing user's workflow or
+  config. Examples: removing or renaming a supported action, changing
+  the meaning of an existing config field, adding a required config
+  field that existing `config.json` files do not have.
+
+### Scope of a bump
+
+- When a change to a skill's own `SKILL.md` is made, bump that skill's
+  version according to the criteria above.
+- When a change to `AGENTS.md` introduces a new shared requirement that
+  affects skill behavior (e.g. the Skill Attribution rule), bump every
+  skill that must comply with the new requirement. The bump level is
+  determined by the nature of the change — a new shared requirement
+  that only adds to output (like attribution) is a PATCH; a new shared
+  requirement that changes how skills interact with Jira would be MINOR
+  or MAJOR depending on impact.
+- Read-only skills are still versioned. Bump them when their procedure,
+  output format, or behavior changes.
+
+### Attribution line versions
+
+The skill attribution line (see below) embeds the skill's version.
+When bumping a version, update the hardcoded version string in the
+skill's attribution instruction to match the new `metadata.version`.
+
+## Skill Attribution
+
+- **Every skill that creates or modifies Jira content must append a skill
+  attribution line to the body of that content.** This applies to issue
+  descriptions, comments, and any other text body sent to Jira.
+- This is unconditional — it does not depend on the `aiDisclaimer` config
+  option. The AI disclaimer is a user-facing notice about AI involvement;
+  the attribution line identifies which skill and version produced the
+  content.
+- The attribution line is always the **last line** of the content body.
+  If an AI disclaimer prefix is also present, the disclaimer goes at the
+  top and the attribution goes at the bottom.
+- Format: `\n\n_Created with {skill-name} v{version}_`
+  - `{skill-name}` is the `name` field from the skill's YAML frontmatter
+    (e.g. `jira-create`, `jira-update`).
+  - `{version}` is the `metadata.version` field from the skill's YAML
+    frontmatter (e.g. `0.1.1`).
+  - Example: `_Created with jira-create v0.1.1_`
+- For bulk operations, use the bulk skill's own name and version (e.g.
+  `jira-bulk v0.1.1`), not the name of the underlying operation.
+
 ## Content Format
 
 - Use `contentFormat: "markdown"` for `createJiraIssue`, `editJiraIssue`,

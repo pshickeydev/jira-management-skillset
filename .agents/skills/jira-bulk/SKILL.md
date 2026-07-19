@@ -10,7 +10,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## Prerequisites
@@ -87,14 +87,18 @@ Only after the user confirms, proceed. For each supported action:
    transition ID.
 
 **Bulk field update (e.g. label, reassign, change priority):**
-1. Build the `fields` object once.
+1. Build the `fields` object once. If the update includes a description
+   change, append the skill attribution line as the last line:
+   `\n\n_Created with jira-bulk v0.1.1_`
 2. Call `editJiraIssue` for each issue.
 
 **Bulk comment:**
 1. Build the comment body once.
 2. Apply AI disclaimer if `config.aiDisclaimer` is true.
-3. Apply `commentVisibility` from config for each issue's project.
-4. Call `addCommentToJiraIssue` for each issue.
+3. Append the skill attribution line as the last line of the comment:
+   `\n\n_Created with jira-bulk v0.1.1_`
+4. Apply `commentVisibility` from config for each issue's project.
+5. Call `addCommentToJiraIssue` for each issue.
 
 **Execution strategy:**
 - Process issues in batches of 5 parallel calls to avoid
@@ -140,3 +144,6 @@ security level rules. Additional skill-specific notes:
   the `fields` object for `editJiraIssue`, only include fields the
   user explicitly asked to change. Omitting the `security` field
   preserves the existing value — setting it to `null` would remove it.
+- Always append the skill attribution line to bulk comments and
+  bulk description updates.
+  See `../../AGENTS.md` for the attribution format.
