@@ -9,16 +9,18 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 ## Prerequisites
 
-Read `../../config.json` relative to this SKILL.md. If missing, tell
-the user: "Run /configure-jira-skillset to set up your Jira defaults
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata — three directories up from this file (see
+AGENTS.md § Configuration Dependency). Read it. If missing, tell the
+user: "Run /configure-jira-skillset to set up your Jira defaults
 first." and stop.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md for shared operational best practices.
 
 ## Procedure
 
@@ -76,7 +78,7 @@ If adding a comment:
 - Apply `commentVisibility` from config
 - Apply AI disclaimer prefix if `config.aiDisclaimer` is true
 - Append the skill attribution line as the last line of the comment:
-  `\n\n_Created with jira-transition v0.1.1_`
+  `\n\n_Created with jira-transition v0.1.2_`
 
 ### Step 5 — Confirm before executing
 
@@ -117,7 +119,7 @@ Transitioned {KEY}:
 
 ## Gotchas
 
-See `../../AGENTS.md` for transition ID, comment, and confirmation
+See AGENTS.md for transition ID, comment, and confirmation
 rules. Additional skill-specific notes:
 
 - The available transitions depend on the issue's current status and
@@ -129,4 +131,4 @@ rules. Additional skill-specific notes:
 - When closing and commenting in parallel, both calls are independent
   and can fail independently. Report each result separately.
 - Always append the skill attribution line to transition comments.
-  See `../../AGENTS.md` for the attribution format.
+  See AGENTS.md for the attribution format.

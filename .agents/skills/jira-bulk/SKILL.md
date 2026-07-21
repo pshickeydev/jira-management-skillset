@@ -10,16 +10,18 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 ## Prerequisites
 
-Read `../../config.json` relative to this SKILL.md. If missing, tell
-the user: "Run /configure-jira-skillset to set up your Jira defaults
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata — three directories up from this file (see
+AGENTS.md § Configuration Dependency). Read it. If missing, tell the
+user: "Run /configure-jira-skillset to set up your Jira defaults
 first." and stop.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md for shared operational best practices.
 
 ## Procedure
 
@@ -89,14 +91,14 @@ Only after the user confirms, proceed. For each supported action:
 **Bulk field update (e.g. label, reassign, change priority):**
 1. Build the `fields` object once. If the update includes a description
    change, append the skill attribution line as the last line:
-   `\n\n_Created with jira-bulk v0.1.1_`
+   `\n\n_Created with jira-bulk v0.1.2_`
 2. Call `editJiraIssue` for each issue.
 
 **Bulk comment:**
 1. Build the comment body once.
 2. Apply AI disclaimer if `config.aiDisclaimer` is true.
 3. Append the skill attribution line as the last line of the comment:
-   `\n\n_Created with jira-bulk v0.1.1_`
+   `\n\n_Created with jira-bulk v0.1.2_`
 4. Apply `commentVisibility` from config for each issue's project.
 5. Call `addCommentToJiraIssue` for each issue.
 
@@ -123,7 +125,7 @@ Bulk operation complete:
 
 ## Gotchas
 
-See `../../AGENTS.md` for confirmation, transition ID, comment, and
+See AGENTS.md for confirmation, transition ID, comment, and
 security level rules. Additional skill-specific notes:
 
 - **Safety cap at 100 issues.** If the query matches more than 100,
@@ -146,4 +148,4 @@ security level rules. Additional skill-specific notes:
   preserves the existing value — setting it to `null` would remove it.
 - Always append the skill attribution line to bulk comments and
   bulk description updates.
-  See `../../AGENTS.md` for the attribution format.
+  See AGENTS.md for the attribution format.

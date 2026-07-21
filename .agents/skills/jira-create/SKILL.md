@@ -10,16 +10,18 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 ## Prerequisites
 
-Read `../../config.json` relative to this SKILL.md. If missing, tell
-the user: "Run /configure-jira-skillset to set up your Jira defaults
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata — three directories up from this file (see
+AGENTS.md § Configuration Dependency). Read it. If missing, tell the
+user: "Run /configure-jira-skillset to set up your Jira defaults
 first." and stop.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md for shared operational best practices.
 
 ## Procedure
 
@@ -49,9 +51,9 @@ needed if custom field metadata must be looked up.
 use it. Otherwise ask.
 
 **Description** — Check if a template exists at
-`../../templates/{type-lowercased}.md` (normalize: lowercase, replace
-spaces with hyphens). If it does, read it and use its body sections as
-scaffolding for the description. Present the template structure to the
+`<skillset-root>/templates/{type-lowercased}.md` (normalize: lowercase,
+replace spaces with hyphens). If it does, read it and use its body sections
+as scaffolding for the description. Present the template structure to the
 user and ask them to fill in the sections, or accept a freeform
 description.
 
@@ -115,7 +117,7 @@ Only after the user confirms, call `createJiraIssue` with:
 - `summary`
 - `description` with `contentFormat: "markdown"` — append the skill
   attribution line as the last line of the description body:
-  `\n\n_Created with jira-create v0.1.1_`
+  `\n\n_Created with jira-create v0.1.2_`
 - `assignee_account_id` (if auto-assign)
 - `parent` (if Sub-task)
 - `additional_fields` assembled in Step 3
@@ -147,6 +149,6 @@ Created {issueTypeName}: {KEY}-{number}
   level, components, labels) and warn the user.
 - The AI disclaimer prefix is only for comments, not issue descriptions.
   The skill attribution line is separate — it is always appended to the
-  description. See `../../AGENTS.md` for the attribution format.
+  description. See AGENTS.md for the attribution format.
 - Use `contentFormat: "markdown"` for descriptions so the user can
   write natural markdown without constructing ADF.

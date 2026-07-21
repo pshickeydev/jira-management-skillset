@@ -9,16 +9,18 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 ## Prerequisites
 
-Read `../../config.json` relative to this SKILL.md. If missing, tell
-the user: "Run /configure-jira-skillset to set up your Jira defaults
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata — three directories up from this file (see
+AGENTS.md § Configuration Dependency). Read it. If missing, tell the
+user: "Run /configure-jira-skillset to set up your Jira defaults
 first." and stop.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md for shared operational best practices.
 
 ## Procedure
 
@@ -95,7 +97,7 @@ Only after the user confirms, call `createIssueLink` with:
 If adding a comment on the link:
 - Apply AI disclaimer prefix if `config.aiDisclaimer` is true
 - Append the skill attribution line as the last line of the comment:
-  `\n\n_Created with jira-link v0.1.1_`
+  `\n\n_Created with jira-link v0.1.2_`
 - Note: `createIssueLink`'s `comment` parameter does not support
   `commentVisibility`. If restricted comments are needed, create
   the link without a comment, then use `addCommentToJiraIssue`
@@ -123,4 +125,4 @@ Linked: {KEY-1} {outward description} {KEY-2}
 - Both issues must exist. If either `getJiraIssue` call fails, report
   the error and stop.
 - Always append the skill attribution line to link comments.
-  See `../../AGENTS.md` for the attribution format.
+  See AGENTS.md for the attribution format.

@@ -11,7 +11,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## Overview
@@ -20,12 +20,15 @@ This skill walks the user through an interactive configuration wizard.
 It is the only skill in the set that performs Jira site discovery — all
 other skills depend on the `config.json` this skill produces.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md (at the skillset root) for shared operational best practices.
 
 ## Procedure — First-Time Setup
 
-Run this flow when `config.json` does not exist at the skillset root
-(`../../config.json` relative to this SKILL.md).
+Run this flow when `config.json` does not exist at the skillset root.
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata: this file lives at
+`<skillset-root>/.agents/skills/jira-configure/SKILL.md`, so
+`config.json` is at `<skillset-root>/config.json` — three directories up.
 
 ### Step 1 — Discover Jira sites
 
@@ -165,7 +168,7 @@ asks for them — these are typically created by automated systems or
 specialized workflows.
 
 For each applicable issue type, generate a template file at
-`../../templates/{type-lowercased}.md` (relative to this SKILL.md).
+`<skillset-root>/templates/{type-lowercased}.md`.
 Normalize the filename: replace spaces with hyphens, lowercase all
 characters (e.g. "Sub-task" → `sub-task.md`, "Change Request" →
 `change-request.md`).
@@ -216,7 +219,8 @@ Do NOT overwrite existing templates without asking the user first.
 ### Step 8 — Write config.json
 
 Assemble the complete configuration object and write it to
-`../../config.json` relative to this SKILL.md.
+`config.json` at the skillset root (the absolute path derived from
+this SKILL.md's `location` — three directories up).
 
 Set `configured_at` to the current ISO 8601 timestamp.
 
@@ -305,7 +309,9 @@ confirm the changes.
   user for a project key or name fragment first.
 - Template generation should be idempotent — if re-run, it should ask
   before overwriting existing templates.
-- `config.json` paths in skills are relative. From any SKILL.md at
-  `.agents/skills/<name>/SKILL.md`, the config is at `../../config.json`.
+- `config.json` paths in skills use absolute paths derived from the
+  skill's `location` metadata. From any SKILL.md at
+  `<skillset-root>/.agents/skills/<name>/SKILL.md`, the config is at
+  `<skillset-root>/config.json` — three directories up from the SKILL.md.
 - When merging project config during reconfiguration, preserve existing
   project entries that are not being modified.

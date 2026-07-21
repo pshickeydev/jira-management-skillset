@@ -9,16 +9,18 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.0"
+  version: "0.1.1"
 ---
 
 ## Prerequisites
 
-Read `../../config.json` relative to this SKILL.md. If missing, tell
-the user: "Run /configure-jira-skillset to set up your Jira defaults
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata — three directories up from this file (see
+AGENTS.md § Configuration Dependency). Read it. If missing, tell the
+user: "Run /configure-jira-skillset to set up your Jira defaults
 first." and stop.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md for shared operational best practices.
 
 ## Procedure
 

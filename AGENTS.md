@@ -37,8 +37,12 @@ at the skillset root so that human readers stay informed.
 - Every skill except `jira-configure` requires `config.json` in the skillset
   root. If missing, tell the user: "Run /configure-jira-skillset to set up
   your Jira defaults first." and stop.
-- Read `config.json` relative to the SKILL.md location:
-  `../../config.json` from any `.agents/skills/<name>/SKILL.md`.
+- Derive the absolute path to `config.json` from this SKILL.md file's
+  location. Every SKILL.md lives at
+  `<skillset-root>/.agents/skills/<name>/SKILL.md`, so `config.json` is
+  at `<skillset-root>/config.json` — three directories up from the
+  SKILL.md file. Use the absolute path provided in the skill's `location`
+  metadata to resolve this. Never rely on the current working directory.
 
 ## Data Handling
 

@@ -10,16 +10,18 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.1"
+  version: "0.1.2"
 ---
 
 ## Prerequisites
 
-Read `../../config.json` relative to this SKILL.md. If missing, tell
-the user: "Run /configure-jira-skillset to set up your Jira defaults
+Derive the absolute path to `config.json` from this SKILL.md file's
+`location` metadata — three directories up from this file (see
+AGENTS.md § Configuration Dependency). Read it. If missing, tell the
+user: "Run /configure-jira-skillset to set up your Jira defaults
 first." and stop.
 
-See `../../AGENTS.md` for shared operational best practices.
+See AGENTS.md for shared operational best practices.
 
 ## Procedure
 
@@ -104,14 +106,14 @@ Common field patterns:
 - Summary: `{ "summary": "New summary text" }`
 - Description: `{ "description": "New description" }` — when updating
   descriptions, append the skill attribution line as the last line:
-  `\n\n_Created with jira-update v0.1.1_`
+  `\n\n_Created with jira-update v0.1.2_`
 - Security level: `{ "security": { "name": "..." } }`
 
 **For adding a comment**, call `addCommentToJiraIssue` with:
 - `cloudId`, `issueIdOrKey`
 - `commentBody` with `contentFormat: "markdown"` — append the skill
   attribution line as the last line:
-  `\n\n_Created with jira-update v0.1.1_`
+  `\n\n_Created with jira-update v0.1.2_`
 - `commentVisibility` from `config.projects.{KEY}.commentVisibility`
   (omit if null)
 - If `config.aiDisclaimer` is true, prepend:
@@ -138,7 +140,7 @@ Added comment to {KEY}:
 
 ## Gotchas
 
-See `../../AGENTS.md` for comment, confirmation, and content format
+See AGENTS.md for comment, confirmation, and content format
 rules. Additional skill-specific notes:
 
 - Always fetch the current issue state before editing. This prevents
@@ -147,7 +149,7 @@ rules. Additional skill-specific notes:
 - Apply the AI disclaimer prefix only to comments, not to descriptions
   or field edits.
 - Always append the skill attribution line to comments and updated
-  descriptions. See `../../AGENTS.md` for the attribution format.
+  descriptions. See AGENTS.md for the attribution format.
 - The project key can be extracted from the issue key (everything
   before the hyphen) to look up project-specific config.
 - `editJiraIssue` returns the updated issue. Use
