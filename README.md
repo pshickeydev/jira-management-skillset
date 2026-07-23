@@ -86,8 +86,8 @@ the schema. Key fields:
 - `projects.{KEY}.commentVisibility` — Default comment restriction
   per project (role, group, or null for unrestricted)
 - `assignToSelf` — Auto-assign created issues to the current user
-- `aiDisclaimer` — Prepend "AI-generated" notice to agent-posted
-  comments
+- `aiDisclaimer` — Prepend "AI-generated" notice to all agent-posted
+  content (descriptions, comments, worklogs)
 
 ## Design Principles
 
@@ -127,16 +127,17 @@ comments). This is unconditional — it does not depend on the
 `aiDisclaimer` config option. The format is:
 
 ```
-_Created with jira-create v0.1.1_
+_Created with jira-create v0.1.3_
 ```
 
 The AI disclaimer (when enabled) is a separate prefix at the top of
-comments. Attribution always goes at the bottom.
+all content bodies (descriptions and comments). Attribution always
+goes at the bottom.
 
 ### Data safety
 
 - No PII or sensitive data in prompts or AI-generated content
-- AI-generated comment disclaimer is configurable
+- AI-generated content disclaimer is configurable
 - Security levels and comment visibility are enforced per-project
 - OAuth 2.1 only — no API tokens or passwords
 

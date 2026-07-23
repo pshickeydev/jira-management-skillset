@@ -10,7 +10,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 ## Prerequisites
@@ -115,9 +115,12 @@ Only after the user confirms, call `createJiraIssue` with:
 - `projectKey`
 - `issueTypeName` (the display name, e.g. "Bug", not the numeric ID)
 - `summary`
-- `description` with `contentFormat: "markdown"` — append the skill
-  attribution line as the last line of the description body:
-  `\n\n_Created with jira-create v0.1.2_`
+- `description` with `contentFormat: "markdown"` — if
+  `config.aiDisclaimer` is true, prepend:
+  `_This content was generated with AI assistance._\n\n`
+  Then append the skill attribution line as the last line of the
+  description body:
+  `\n\n_Created with jira-create v0.1.3_`
 - `assignee_account_id` (if auto-assign)
 - `parent` (if Sub-task)
 - `additional_fields` assembled in Step 3
@@ -147,8 +150,8 @@ Created {issueTypeName}: {KEY}-{number}
 - If the user specifies a project not in `config.projects`, the issue
   can still be created — just skip project-specific defaults (security
   level, components, labels) and warn the user.
-- The AI disclaimer prefix is only for comments, not issue descriptions.
-  The skill attribution line is separate — it is always appended to the
-  description. See AGENTS.md for the attribution format.
+- If `config.aiDisclaimer` is true, prepend the AI disclaimer to the
+  description body. The skill attribution line is separate — it is
+  always appended as the last line. See AGENTS.md for both formats.
 - Use `contentFormat: "markdown"` for descriptions so the user can
   write natural markdown without constructing ADF.

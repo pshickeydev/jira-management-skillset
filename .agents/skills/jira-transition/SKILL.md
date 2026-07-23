@@ -9,7 +9,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 ## Prerequisites
@@ -76,9 +76,10 @@ If yes, compose the comment text. Use `addCommentToJiraIssue` as a
 
 If adding a comment:
 - Apply `commentVisibility` from config
-- Apply AI disclaimer prefix if `config.aiDisclaimer` is true
+- If `config.aiDisclaimer` is true, prepend:
+  `_This content was generated with AI assistance._\n\n`
 - Append the skill attribution line as the last line of the comment:
-  `\n\n_Created with jira-transition v0.1.2_`
+  `\n\n_Created with jira-transition v0.1.3_`
 
 ### Step 5 — Confirm before executing
 

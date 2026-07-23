@@ -10,7 +10,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 ## Prerequisites
@@ -105,19 +105,21 @@ Common field patterns:
 - Assignee (clear): `{ "assignee": null }`
 - Summary: `{ "summary": "New summary text" }`
 - Description: `{ "description": "New description" }` — when updating
-  descriptions, append the skill attribution line as the last line:
-  `\n\n_Created with jira-update v0.1.2_`
+  descriptions, if `config.aiDisclaimer` is true, prepend:
+  `_This content was generated with AI assistance._\n\n`
+  Then append the skill attribution line as the last line:
+  `\n\n_Created with jira-update v0.1.3_`
 - Security level: `{ "security": { "name": "..." } }`
 
 **For adding a comment**, call `addCommentToJiraIssue` with:
 - `cloudId`, `issueIdOrKey`
 - `commentBody` with `contentFormat: "markdown"` — append the skill
   attribution line as the last line:
-  `\n\n_Created with jira-update v0.1.2_`
+  `\n\n_Created with jira-update v0.1.3_`
 - `commentVisibility` from `config.projects.{KEY}.commentVisibility`
   (omit if null)
 - If `config.aiDisclaimer` is true, prepend:
-  `_This comment was generated with AI assistance._\n\n`
+  `_This content was generated with AI assistance._\n\n`
 
 **For updating a comment**, call `addCommentToJiraIssue` with the same
 parameters (including the skill attribution line) plus `commentId` set
@@ -146,8 +148,9 @@ rules. Additional skill-specific notes:
 - Always fetch the current issue state before editing. This prevents
   stale assumptions and lets you show the user what they're changing.
 - To clear a field, set its value to `null` in the `fields` object.
-- Apply the AI disclaimer prefix only to comments, not to descriptions
-  or field edits.
+- Apply the AI disclaimer prefix to both descriptions and comments
+  when `config.aiDisclaimer` is true. Do not apply it to non-body
+  field edits (e.g. priority, labels, assignee).
 - Always append the skill attribution line to comments and updated
   descriptions. See AGENTS.md for the attribution format.
 - The project key can be extracted from the issue key (everything

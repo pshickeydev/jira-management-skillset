@@ -11,7 +11,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.1"
+  version: "0.1.3"
 ---
 
 ## Overview
@@ -155,9 +155,10 @@ Walk through these prompts:
    Also store project-level defaults in `projects.{KEY}.defaultLabels`
    and `projects.{KEY}.defaultComponents`.
 4. **Auto-assign to self** — Ask yes/no. Store as `assignToSelf`.
-5. **AI disclaimer on comments** — Explain: "When skills post comments
-   to Jira, should they include a notice that the content was generated
-   with AI assistance?" Ask yes/no. Store as `aiDisclaimer`.
+5. **AI disclaimer on content** — Explain: "When skills create or
+   modify Jira content (descriptions, comments, worklogs), should they
+   include a notice that the content was generated with AI assistance?"
+   Ask yes/no. Store as `aiDisclaimer`.
 
 ### Step 7 — Generate templates
 

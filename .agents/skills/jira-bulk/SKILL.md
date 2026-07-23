@@ -10,7 +10,7 @@ license: Apache-2.0
 compatibility: Requires the official Atlassian Rovo MCP server (Jira)
 metadata:
   author: pshickeydev
-  version: "0.1.2"
+  version: "0.1.3"
 ---
 
 ## Prerequisites
@@ -90,15 +90,19 @@ Only after the user confirms, proceed. For each supported action:
 
 **Bulk field update (e.g. label, reassign, change priority):**
 1. Build the `fields` object once. If the update includes a description
-   change, append the skill attribution line as the last line:
-   `\n\n_Created with jira-bulk v0.1.2_`
+   change:
+   - If `config.aiDisclaimer` is true, prepend:
+     `_This content was generated with AI assistance._\n\n`
+   - Append the skill attribution line as the last line:
+     `\n\n_Created with jira-bulk v0.1.3_`
 2. Call `editJiraIssue` for each issue.
 
 **Bulk comment:**
 1. Build the comment body once.
-2. Apply AI disclaimer if `config.aiDisclaimer` is true.
+2. If `config.aiDisclaimer` is true, prepend:
+   `_This content was generated with AI assistance._\n\n`
 3. Append the skill attribution line as the last line of the comment:
-   `\n\n_Created with jira-bulk v0.1.2_`
+   `\n\n_Created with jira-bulk v0.1.3_`
 4. Apply `commentVisibility` from config for each issue's project.
 5. Call `addCommentToJiraIssue` for each issue.
 

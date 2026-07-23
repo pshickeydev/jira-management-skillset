@@ -49,9 +49,11 @@ at the skillset root so that human readers stay informed.
 - Do not include personally identifiable information (PII) or sensitive data
   in issue descriptions, comments, or any content sent to AI-backed tools.
 - Review all AI-generated content before submitting it to Jira.
-- When posting comments via an agent, prepend an "AI-generated" notice to
-  the comment body if the `aiDisclaimer` flag in `config.json` is `true`.
-  Example prefix: `_This comment was generated with AI assistance._\n\n`
+- When creating or modifying any Jira content body — including issue
+  descriptions, comments, and worklog comments — prepend an
+  "AI-generated" notice if the `aiDisclaimer` flag in `config.json` is
+  `true`.
+  Example prefix: `_This content was generated with AI assistance._\n\n`
 
 ## Security Levels
 
@@ -154,9 +156,9 @@ skill's attribution instruction to match the new `metadata.version`.
     (e.g. `jira-create`, `jira-update`).
   - `{version}` is the `metadata.version` field from the skill's YAML
     frontmatter (e.g. `0.1.1`).
-  - Example: `_Created with jira-create v0.1.1_`
+  - Example: `_Created with jira-create v0.1.3_`
 - For bulk operations, use the bulk skill's own name and version (e.g.
-  `jira-bulk v0.1.1`), not the name of the underlying operation.
+  `jira-bulk v0.1.3`), not the name of the underlying operation.
 
 ## Content Format
 
